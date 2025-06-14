@@ -1,9 +1,14 @@
-FROM node:18 as build
-WORKDIR /app
-COPY . .
-RUN npm install
-RUN npm run build --prod
+FROM node:18
 
-FROM nginx:alpine
-COPY --from=build /app/dist/banking-app /usr/share/nginx/html
-EXPOSE 80
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install -g @angular/cli && npm install
+
+COPY . .
+
+EXPOSE 4200
+
+CMD ["ng", "serve", "--host", "0.0.0.0", "--poll=2000"]
+
+

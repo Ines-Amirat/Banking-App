@@ -10,5 +10,11 @@ services:
   frontend:
     build:
       context: ./frontend
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
     ports:
-      - "4200:80"
+      - "4200:4200"
+    command: ng serve --host 0.0.0.0 --poll=2000
+
+
